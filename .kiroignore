@@ -4,3 +4,7 @@
 /storage/framework
 /public/build
 /public/vendor
+/tests
+/bootstrap/cache
+*.log
+*.sqlite

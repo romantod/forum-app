@@ -1,9 +1,9 @@
-<script setup>
+<script setup lang="ts">
 import { Head } from '@inertiajs/vue3';
 import { Form } from '@inertiajs/vue3';
 import InputError from '@/components/InputError.vue';
 
-const props = defineProps({
+defineProps({
     title: String,
     description: String,
     success: String,
