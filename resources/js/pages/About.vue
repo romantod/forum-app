@@ -4,7 +4,7 @@ import { Form } from '@inertiajs/vue3';
 import { usePage } from '@inertiajs/vue3';
 import InputError from '@/components/InputError.vue';
 
-const props = defineProps({
+defineProps({
     title: String,
     description: String,
     success: String,
