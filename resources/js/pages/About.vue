@@ -1,14 +1,17 @@
 <script setup lang="ts">
 import { Head } from '@inertiajs/vue3';
 import { Form } from '@inertiajs/vue3';
+import { usePage } from '@inertiajs/vue3';
 import InputError from '@/components/InputError.vue';
 
-defineProps({
+const props = defineProps({
     title: String,
     description: String,
     success: String,
 });
 
+const page = usePage();
+const user = page.props.auth.user;
 
 </script>
 
@@ -21,6 +24,8 @@ defineProps({
     <div v-if="success" class="text-green-600 mb-4">
         {{ success }}
     </div>
+
+    <p v-if="user">Привет, {{ user.name }}</p>
     
     <Form
         action="/feedback"
