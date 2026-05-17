@@ -12,6 +12,6 @@ class FeedbackController extends Controller
             'message' => 'required|min:10'
         ]);
 
-        return redirect()->back()->with('success', 'Сообщение отправлено!');
+        return redirect()->back();
     }
 }

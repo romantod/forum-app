@@ -3,11 +3,11 @@ import { Head } from '@inertiajs/vue3';
 import { Form } from '@inertiajs/vue3';
 import { usePage } from '@inertiajs/vue3';
 import InputError from '@/components/InputError.vue';
+import { toast } from 'vue-sonner';
 
 defineProps({
     title: String,
     description: String,
-    success: String,
 });
 
 const page = usePage();
@@ -21,10 +21,6 @@ const user = page.props.auth.user;
     <h2>{{ title }}</h2>
     <p>{{ description }}</p>
 
-    <div v-if="success" class="text-green-600 mb-4">
-        {{ success }}
-    </div>
-
     <p v-if="user">Привет, {{ user.name }}</p>
     
     <Form
@@ -32,12 +28,13 @@ const user = page.props.auth.user;
         method="post"
         v-slot="{ errors, processing }"
         class="max-w-md"
+        @success="toast.success('Сообщение отправлено!')"
     >
         <div>
             <label>Имя</label>
             <input type="text" name="name" 
             class="w-full p-2 bg-gray-700 text-white rounded" />
-            <InputError :message="errors.name" />
+            <InputError :message="errors.name" />            
         </div>
 
         <div>
