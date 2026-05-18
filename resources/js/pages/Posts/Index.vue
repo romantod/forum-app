@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Link, router, Head } from '@inertiajs/vue3';
+import { router, Head } from '@inertiajs/vue3';
 import { ref, watch } from 'vue';
 
 const props = defineProps({
