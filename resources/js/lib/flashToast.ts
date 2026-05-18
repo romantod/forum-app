@@ -3,9 +3,8 @@ import { toast } from 'vue-sonner';
 import type { FlashToast } from '@/types/ui';
 
 export function initializeFlashToast(): void {
-    router.on('flash', (event) => {
-        const flash = (event as CustomEvent).detail?.flash;
-        const data = flash?.toast as FlashToast | undefined;
+    router.on('navigate', (event) => {
+        const data = (event.detail.page.props.flash as { toast?: FlashToast })?.toast;
 
         if (!data) {
             return;

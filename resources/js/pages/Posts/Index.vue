@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { router, Head } from '@inertiajs/vue3';
+import { router, Head, Link } from '@inertiajs/vue3';
 import { ref, watch } from 'vue';
 
 const props = defineProps({
@@ -32,6 +32,8 @@ watch(searchQuery, (value) => {
         placeholder="Поиск..."
         class="w-full p-2 mb-4 rounded bg-gray-700 text-white"
     />
+
+    <Link href="/posts/create" />
 
     <div class="max-w-3xl mx-auto p-6 space-y-6">
         <div v-for="(post, index) in posts.data" :key="post.id" class="bg-white rounded-lg shadow p-4 dark:bg-green-800">

@@ -40,8 +40,7 @@ const user = page.props.auth.user;
         <div>
             <label>Сообщение</label>
             <textarea name="message"
-                class="w-full p-2 bg-gray-700 text-white rounded">
-            </textarea>
+                class="w-full p-2 bg-gray-700 text-white rounded"></textarea>
             <InputError :message="errors.message" />
         </div>        
         

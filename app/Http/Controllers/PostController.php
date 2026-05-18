@@ -21,4 +21,33 @@ class PostController extends Controller
             'search' => $search,
         ]);
     }
+
+    public function create() {
+        return Inertia::render('Posts/Create');
+    }
+    
+    public function store(Request $request) {
+        $validated = $request->validate([
+            'title' => 'required|min:3|max:255',
+            'body' => 'required|min:10',
+        ]);
+
+        $request->user()->posts()->create($validated);
+
+        return redirect()->route('posts.index')
+            ->with('toast', ['type' => 'success', 'message' => 'Пост создан!']);
+    }
+    public function show(Post $post) {
+        
+    }
+    public function edit(Post $post) {
+        
+    }
+    public function update(Request $request, Post $post) {
+        
+    }
+    public function destroy(Post $post) {
+        
+    }
+
 }
