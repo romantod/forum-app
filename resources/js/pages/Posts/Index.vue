@@ -42,7 +42,7 @@ watch(searchQuery, (value) => {
     </div>
 
     <div class="flex gap-2 mt-6">
-        <Link
+        <a
             v-for="link in posts.links"
             :key="link.label"
             :href="link.url || '#'"
