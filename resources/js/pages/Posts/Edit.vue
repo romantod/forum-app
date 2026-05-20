@@ -27,8 +27,8 @@ defineProps({
 
         <div>
             <label>Содержание</label>
-            <textarea name="body"
-                class="w-full p-2 bg-gray-700 text-white rounded">{{ post.body }}</textarea>
+            <textarea name="body" :value="post.body"
+                class="w-full p-2 bg-gray-700 text-white rounded"></textarea>
             <InputError :message="errors.body" />
         </div>        
         
