@@ -37,17 +37,31 @@ class PostController extends Controller
         return redirect()->route('posts.index')
             ->with('toast', ['type' => 'success', 'message' => 'Пост создан!']);
     }
+
     public function show(Post $post) {
-        
+        return Inertia::render('Posts/Show', ['post' => $post]);
     }
+
     public function edit(Post $post) {
-        
+        return Inertia::render('Posts/Edit', ['post' => $post]);
     }
+    
     public function update(Request $request, Post $post) {
-        
+        $validated = $request->validate([
+            'title' => 'required|min:3|max:255',
+            'body' => 'required|min:10',
+        ]);
+
+        $post->update($validated);
+
+        return redirect()->route('posts.index')
+            ->with('toast', ['type' => 'success', 'message' => 'Пост обновлен!']);
     }
+
     public function destroy(Post $post) {
-        
+        $post->delete();
+
+        return redirect()->route('posts.index');
     }
 
 }
