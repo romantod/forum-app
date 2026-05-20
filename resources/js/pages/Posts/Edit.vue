@@ -27,7 +27,7 @@ defineProps({
 
         <div>
             <label>Содержание</label>
-            <textarea name="body" :value="post.body"
+            <textarea name="body" :value="post.body" rows="8"
                 class="w-full p-2 bg-gray-700 text-white rounded"></textarea>
             <InputError :message="errors.body" />
         </div>        

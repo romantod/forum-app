@@ -4,7 +4,6 @@ import type { FlashToast } from '@/types/ui';
 
 export function initializeFlashToast(): void {
     router.on('navigate', (event) => {
-        console.log('navigate', event.detail.page.props.flash);
         const data = (event.detail.page.props.flash as { toast?: FlashToast })?.toast;
 
         if (!data) {

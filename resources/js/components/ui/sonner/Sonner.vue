@@ -11,6 +11,7 @@ const { appearance } = useAppearance();
         :theme="appearance"
         class="toaster group"
         position="bottom-right"
+        rich-colors
         :style="{
             '--normal-bg': 'var(--popover)',
             '--normal-text': 'var(--popover-foreground)',
