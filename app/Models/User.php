@@ -12,7 +12,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 
-#[Fillable(['name', 'email', 'password'])]
+#[Fillable(['name', 'email', 'password', 'role'])]
 #[Hidden(['password', 'two_factor_secret', 'two_factor_recovery_codes', 'remember_token'])]
 class User extends Authenticatable {
     /** @use HasFactory<UserFactory> */
@@ -34,4 +34,21 @@ class User extends Authenticatable {
     public function posts(): HasMany {
         return $this->hasMany(Post::class);
     }
+
+    public function threads(): HasMany {
+        return $this->hasMany(Thread::class);
+    }
+
+    public function replies(): HasMany {
+        return $this->hasMany(Reply::class);
+    }
+
+    public function isAdmin(): bool {
+        return $this->role === 'admin';
+    }
+    
+    public function isModerator(): bool {
+        return $this->role === 'moderator' || $this->role === 'admin';
+    }
+
 }

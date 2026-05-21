@@ -11,11 +11,15 @@ class PostController extends Controller
     public function index(Request $request) {
         $search = $request->input('search');
         $posts = Post::query()
-            ->when($search, fn ($q) => $q->where('title', 'like', "%{$search}%")
-                ->orWhere('body', 'like', "%{$search}%"))
-            ->latest()
-            ->paginate(10)
-            ->withQueryString();
+            ->when($search, function ($q) use ($search) {
+                $term = '%' . mb_strtolower($search) . '%';
+                $q->where(function ($q) use ($term) {
+                    $q->whereRaw('LOWER(title) LIKE ?', [$term])
+                    ->orwhereRaw('LOWER(body) LIKE ?', [$term]);
+                });
+            })
+            ->latest()->paginate(10)->withQueryString();
+
         return Inertia::render('Posts/Index', [
             'posts' => $posts,
             'search' => $search,

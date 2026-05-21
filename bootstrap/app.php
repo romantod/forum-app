@@ -18,6 +18,7 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $middleware->alias([
             'log.visits' => \App\Http\Middleware\LogVisits::class,
+            'role' => \App\Http\Middleware\EnsureUserHasRole::class,
         ]);
 
         $middleware->web(append: [
