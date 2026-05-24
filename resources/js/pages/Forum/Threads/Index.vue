@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="vue">
 import { Head, Link } from '@inertiajs/vue3';
 import { LayersPlus, MessageCircle } from '@lucide/vue';
 

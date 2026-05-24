@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="vue">
 import { Head, Link } from '@inertiajs/vue3';
 import { Bookmark } from 'lucide-vue-next';
 
