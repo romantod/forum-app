@@ -16,5 +16,4 @@ class Category extends Model {
     public function threads(): HasMany {
         return $this->hasMany(Thread::class);
     }
-
 }

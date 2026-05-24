@@ -79,7 +79,7 @@ watch(searchQuery, (value) => {
                 <p class="text-gray-300 whitespace-pre-line leading-relaxed">{{ post.body }}</p>
             </div>
         </div>
-
+            
         <div class="flex gap-2 mt-8 justify-center">
             <a
                 v-for="link in posts.links"
@@ -89,9 +89,8 @@ watch(searchQuery, (value) => {
                 :class="[
                     'px-3 py-1 rounded text-sm',
                     link.active ? 'bg-blue-600 text-white' : 'bg-gray-700 text-gray-300',
-                    !link.url ? 'opacity-40 pointer-events-none' : 'hover:bg-blue-500 hover:text-white',
-                ]"
-            />
+                    !link.url ? 'opacity-40 pointer-events-none' : 'hover:bg-blue-500 hover:text-white']">
+            </a>
         </div>
-    </div>
+    </div>    
 </template>

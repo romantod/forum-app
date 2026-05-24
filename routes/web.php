@@ -3,7 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\ThreadController;
 use App\Http\Controllers\PostController;
 
 Route::inertia('/', 'Welcome', [
@@ -18,6 +20,10 @@ Route::get('about', fn() => Inertia::render('About', [
 Route::post('feedback', [FeedbackController::class, 'store'])->name('feedback.store');
 
 Route::get('posts', [PostController::class, 'index'])->name('posts.index');
+
+Route::get('/forum', [CategoryController::class, 'index'])->name('forum.index');
+Route::get('/forum/{category:slug}', [ThreadController::class, 'index'])->name('threads.index');
+Route::get('/forum/{category:slug}/{thread:slug}', [ThreadController::class, 'show'])->name('threads.show');
 
 
 Route::middleware(['auth', 'verified'])->group(function () {
