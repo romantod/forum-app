@@ -2,7 +2,6 @@
 import { Head, Form } from '@inertiajs/vue3';
 import InputError from '@/components/InputError.vue';
 
-
 </script>
 
 <template>
@@ -12,8 +11,8 @@ import InputError from '@/components/InputError.vue';
         action="/posts"
         method="post"
         v-slot="{ errors, processing }"
-        class="max-w-md"
-    >
+        class="max-w-md">
+        
         <div>
             <label>Заголовок</label>
             <input type="text" name="title" 
@@ -34,7 +33,6 @@ import InputError from '@/components/InputError.vue';
             class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-50">
             Создать
         </button>
-    </Form> 
-
+    </Form>
   
 </template>
