@@ -42,5 +42,4 @@ class ThreadController extends Controller
         return redirect('/forum/' . $category->slug . '/' . $thread->slug)
             ->with('toast', ['type' => 'success', 'message' => 'Тема создана!']);
     }
-
 }

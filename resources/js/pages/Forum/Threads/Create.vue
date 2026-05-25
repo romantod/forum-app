@@ -8,6 +8,7 @@ const submit = () => form.post('/forum/' + props.category.slug);
 </script>
 
 <template>
+    <Head title="Создать тему" />
     <Link href="/forum">← Назад</Link>
     <p> Создать тему в: {{ category.name }}</p>
     <div class="max-w-3xl mx-auto p-6">
