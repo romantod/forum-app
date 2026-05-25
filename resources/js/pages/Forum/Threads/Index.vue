@@ -22,7 +22,7 @@ defineProps({ category: Object, threads: Object });
         </div>
 
         <div class="flex justify-end mb-6">
-            <Link href="'/forum/' + category.slug + '/create'" class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded">
+            <Link :href="'/forum/' + category.slug + '/create'" class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded">
                 <LayersPlus class="w-5 h-5 inline-block" /> Создать тему                
             </Link>
         </div>        

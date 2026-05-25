@@ -39,7 +39,7 @@ class ThreadController extends Controller
             'user_id' => auth()->id(),
         ]);
 
-        return redirect()->('/forum/' . $category->slug . '/' . $thread->slug)
+        return redirect('/forum/' . $category->slug . '/' . $thread->slug)
             ->with('toast', ['type' => 'success', 'message' => 'Тема создана!']);
     }
 
