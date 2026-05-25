@@ -23,6 +23,15 @@ Route::get('posts', [PostController::class, 'index'])->name('posts.index');
 
 Route::get('/forum/{category:slug}/create', [ThreadController::class, 'create'])->name('threads.create')
     ->middleware(['auth', 'verified']);
+    
+Route::get('/forum/{category:slug}/{thread:slug}/edit', [ThreadController::class, 'edit'])->name('threads.edit')
+    ->middleware(['auth', 'verified']);
+
+Route::put('/forum/{category:slug}/{thread:slug}', [ThreadController::class, 'update'])->name('threads.update')
+    ->middleware(['auth', 'verified']);
+
+Route::delete('/forum/{category:slug}/{thread:slug}', [ThreadController::class, 'delete'])->name('threads.destroy')
+    ->middleware(['auth', 'verified']);
 
 Route::get('/forum', [CategoryController::class, 'index'])->name('forum.index');
 Route::get('/forum/{category:slug}', [ThreadController::class, 'index'])->name('threads.index');

@@ -42,4 +42,27 @@ class ThreadController extends Controller
         return redirect('/forum/' . $category->slug . '/' . $thread->slug)
             ->with('toast', ['type' => 'success', 'message' => 'Тема создана!']);
     }
+
+    public function edit(Category $category, Thread $thread) {
+        return Inertia::render('Forum/Threads/Edit', ['thread' => $thread, 'category' => $category]);
+    }
+
+    public function update(Request $request, Category $category, Thread $thread) {
+        $validated = $request->validate([
+            'title' => 'required|min:3|max:255',
+            'body' => 'required|min:10',
+        ]);
+
+        $thread->update($validated);
+
+        return redirect('/forum/' . $category->slug . '/' . $thread->slug)
+            ->with('toast', ['type' => 'success', 'message' => 'Тема обновлена!']);
+    }
+
+    public function destroy(Category $category, Thread $thread) {
+        $thread->delete();
+        
+        return redirect('/forum/ . category->slug')
+            ->with('toast', ['type' => 'success', 'message' => 'Тема удалена!']);
+    }
 }
