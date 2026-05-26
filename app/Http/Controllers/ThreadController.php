@@ -17,7 +17,11 @@ class ThreadController extends Controller
     
     public function show(Category $category, Thread $thread) {
         $thread->load(['replies.user', 'user', 'category']);
-        return Inertia::render('Forum/Threads/Show', ['thread' => $thread]);
+
+        return Inertia::render('Forum/Threads/Show', [
+            'thread' => $thread,
+            'canEdit' => auth()->check() && (auth()->id() === $thread->user_id || auth()->user()->isModerator()),
+        ]);
     }
 
     public function create(Category $category) {
@@ -48,11 +52,12 @@ class ThreadController extends Controller
     }
 
     public function update(Request $request, Category $category, Thread $thread) {
+        $this->authorize('update', $thread);
         $validated = $request->validate([
             'title' => 'required|min:3|max:255',
             'body' => 'required|min:10',
-        ]);
-
+            ]);
+            
         $thread->update($validated);
 
         return redirect('/forum/' . $category->slug . '/' . $thread->slug)
@@ -60,6 +65,7 @@ class ThreadController extends Controller
     }
 
     public function destroy(Category $category, Thread $thread) {
+        $this->authorize('delete', $thread);
         $thread->delete();
         
         return redirect('/forum/' . $category->slug)

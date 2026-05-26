@@ -7,6 +7,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\ThreadController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\ReplyController;
 
 Route::inertia('/', 'Welcome', [
     'canRegister' => Features::enabled(Features::registration()),
@@ -41,6 +42,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('posts', PostController::class)->except(['index']);
     Route::inertia('dashboard', 'Dashboard')->middleware('log.visits')->name('dashboard');
     Route::post('/forum/{category:slug}', [ThreadController::class, 'store'])->name('threads.store');
+    Route::post('/forum/{category:slug}/{thread:slug}/replies', [ReplyController::class, 'store'])->name('replies.store');
 });
 
 
