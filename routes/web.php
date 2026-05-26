@@ -30,7 +30,7 @@ Route::get('/forum/{category:slug}/{thread:slug}/edit', [ThreadController::class
 Route::put('/forum/{category:slug}/{thread:slug}', [ThreadController::class, 'update'])->name('threads.update')
     ->middleware(['auth', 'verified']);
 
-Route::delete('/forum/{category:slug}/{thread:slug}', [ThreadController::class, 'delete'])->name('threads.destroy')
+Route::delete('/forum/{category:slug}/{thread:slug}', [ThreadController::class, 'destroy'])->name('threads.destroy')
     ->middleware(['auth', 'verified']);
 
 Route::get('/forum', [CategoryController::class, 'index'])->name('forum.index');

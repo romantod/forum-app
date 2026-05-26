@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Head, Link } from '@inertiajs/vue3';
-import { LayersPlus, MessageCircle } from '@lucide/vue';
+import { LayersPlus, MessageCircle, MoveLeft } from '@lucide/vue';
 
 defineProps({ category: Object, threads: Object });
 
@@ -12,11 +12,11 @@ defineProps({ category: Object, threads: Object });
     <div class="max-w-3xl mx-auto p-6 space-y-4">
         <div class="mb-6">
             <Link :href="'/forum'" class="bg-green-800 hover:bg-green-600 text-white px-4 py-2 rounded">
-                ← К разделам
+                <MoveLeft class="w-5 h-5 inline-block" />&nbsp;&nbsp;&nbsp;К разделам
             </Link>
         </div>
 
-        <div class="border border-yellow-500 bg-gray-700 rounded-lg p-3">
+        <div class="font-bold border border-yellow-500 bg-gray-700 rounded-lg p-3">
             <h1 class="text-white mb-2">{{ category.name }}</h1>
             <p class="text-white">{{ category.description }}</p>
         </div>

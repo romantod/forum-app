@@ -62,7 +62,7 @@ class ThreadController extends Controller
     public function destroy(Category $category, Thread $thread) {
         $thread->delete();
         
-        return redirect('/forum/ . category->slug')
+        return redirect('/forum/' . $category->slug)
             ->with('toast', ['type' => 'success', 'message' => 'Тема удалена!']);
     }
 }

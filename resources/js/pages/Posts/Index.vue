@@ -53,27 +53,28 @@ watch(searchQuery, (value) => {
             <div
                 v-for="post in posts.data"
                 :key="post.id"
-                class="rounded-lg border border-gray-700 bg-gray-800 p-5"
-            >
+                class="rounded-lg border border-gray-700 bg-gray-800 p-5">
+                
                 <div class="flex items-start justify-between mb-3">
                     <h2 class="text-lg font-semibold text-white">
                         <Link :href="'/posts/' + post.id">{{ post.title }}</Link>
                     </h2>
+
                     <div class="flex gap-2 shrink-0 ml-4">
                         <a
                             :href="'/posts/' + post.id + '/edit'"
                             class="text-xs px-3 py-1.5 rounded bg-gray-700 text-blue-300 
-                                hover:bg-blue-600 hover:text-white transition cursor-pointer"
-                        >
+                                hover:bg-blue-600 hover:text-white transition cursor-pointer">
                             ✏️ Изменить
                         </a>
+
                         <button
                             @click="deletePost(post.id)"
                             class="text-xs px-3 py-1.5 rounded bg-gray-700 text-red-300 
-                                hover:bg-red-600 hover:text-white transition cursor-pointer"
-                        >
+                                hover:bg-red-600 hover:text-white transition cursor-pointer">
                             🗑️ Удалить
                         </button>
+
                     </div>
                 </div>
                 <p class="text-gray-300 whitespace-pre-line leading-relaxed">{{ post.body }}</p>
