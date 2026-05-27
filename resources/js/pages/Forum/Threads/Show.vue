@@ -2,7 +2,7 @@
 import { Head, Link, router, useForm } from '@inertiajs/vue3';
 import { MoveLeft } from '@lucide/vue';
 
-const props = defineProps({ thread: Object, canEdit: Boolean })
+const props = defineProps({ thread: Object, canEdit: Boolean, authUserId: Number })
 
 const deleteThread = () => {
     if (!confirm('Удалить тему?')) return;
@@ -14,11 +14,15 @@ const submitReply = () => form.post('/forum/' + props.thread.category.slug + '/'
     onSuccess: () => form.reset(),
 });
 
+const deleteReply = (id: number) => {
+    if (!confirm('Удалить ответ?')) return;
+    router.delete('/replies/' + id);
+};
+
 </script>
 
 <template>
     <div>
-
         <Head :title="thread.title" />
 
         <div class="max-w-3xl mx-auto p-6">
@@ -61,7 +65,12 @@ const submitReply = () => form.post('/forum/' + props.thread.category.slug + '/'
                     <p class="text-sm mb-2 font-semibold text-white">{{ reply.user.name }}</p>                
                     <p class="text-gray-400 text-xs mb-2">{{ new Date(reply.created_at).toLocaleString('ru-RU') }}</p>
                     <p class="text-gray-300 mb-4">{{ reply.body }}</p>
-                                
+
+                    <button v-if="authUserId === reply.user_id || canEdit" @click="deleteReply(reply.id)" class="text-xs px-3 
+                        py-1.5 rounded bg-gray-700 text-red-300 hover:bg-red-600 hover:text-white transition cursor-pointer">
+                        🗑️ Удалить
+                    </button>
+
                 </div>
 
                 <hr class="border-gray-700 my-6">

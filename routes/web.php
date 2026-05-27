@@ -43,6 +43,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::inertia('dashboard', 'Dashboard')->middleware('log.visits')->name('dashboard');
     Route::post('/forum/{category:slug}', [ThreadController::class, 'store'])->name('threads.store');
     Route::post('/forum/{category:slug}/{thread:slug}/replies', [ReplyController::class, 'store'])->name('replies.store');
+    Route::delete('/replies/{reply}', [ReplyController::class, 'destroy'])->name('replies.destroy');
 });
 
 

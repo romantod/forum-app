@@ -39,6 +39,7 @@ class ThreadController extends Controller
         return Inertia::render('Forum/Threads/Show', [
             'thread' => $thread,
             'canEdit' => auth()->check() && (auth()->id() === $thread->user_id || auth()->user()->isModerator()),
+            'authUserId' => auth()->id(),
         ]);
     }
 
