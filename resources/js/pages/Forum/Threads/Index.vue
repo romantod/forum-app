@@ -1,8 +1,33 @@
 <script setup lang="ts">
-import { Head, Link } from '@inertiajs/vue3';
+import { Head, Link, router } from '@inertiajs/vue3';
 import { LayersPlus, MessageCircle, MoveLeft } from '@lucide/vue';
+import { ref, watch } from 'vue';
 
-defineProps({ category: Object, threads: Object });
+const props = defineProps({ category: Object, threads: Object, search: String, sort: String });
+
+const searchQuery = ref(props.search ?? '');
+const currentSort = ref(props.sort ?? 'latest');
+
+let timeout: ReturnType<typeof setTimeout>;
+watch(searchQuery, (value) => {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+        router.get('/forum/' + props.category.slug, { search: value, sort: currentSort.value }, {
+            preserveState: true,
+            preserveScroll: true,
+            replace: true,
+        });
+    }, 300);
+});
+
+const setSort = (sort: string) => {
+    currentSort.value = sort;
+    router.get('/forum/' + props.category.slug, { search: searchQuery.value, sort }, {
+        preserveState: true,
+        preserveScroll: true,
+        replace: true,
+    });
+};
 
 </script>
 
@@ -10,10 +35,15 @@ defineProps({ category: Object, threads: Object });
     <Head :title="category.name" />
 
     <div class="max-w-3xl mx-auto p-6 space-y-4">
-        <div class="mb-6">
+        <div class="flex items-center justify-between mb-6">
             <Link :href="'/forum'" class="bg-green-800 hover:bg-green-600 text-white px-4 py-2 rounded">
                 <MoveLeft class="w-5 h-5 inline-block" />&nbsp;&nbsp;&nbsp;К разделам
             </Link>
+
+            <input v-model="searchQuery" type="text" placeholder="Поиск тем..." 
+                class="w-64 p-2 rounded bg-gray-700 text-white placeholder-gray-400"/>
+
+            
         </div>
 
         <div class="font-bold border border-yellow-500 bg-gray-700 rounded-lg p-3">
@@ -21,10 +51,25 @@ defineProps({ category: Object, threads: Object });
             <p class="text-white">{{ category.description }}</p>
         </div>
 
-        <div class="flex justify-end mb-6">
-            <Link :href="'/forum/' + category.slug + '/create'" class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded">
-                <LayersPlus class="w-5 h-5 inline-block" /> Создать тему                
-            </Link>
+        <div class="flex justify-between py-5">
+
+            <div>
+                <button @click="setSort('latest')" :class="currentSort === 'latest' ? 'bg-blue-600 text-white' : 
+                    'bg-gray-700 text-gray-300'" class="px-4 py-2 rounded">
+                    Новые
+                </button>
+
+                <button @click="setSort('popular')" :class="currentSort === 'popular' ? 'bg-blue-600 text-white' : 
+                    'bg-gray-700 text-gray-300'" class="px-4 py-2 rounded ml-4">
+                    Популярные
+                </button>
+            </div>
+
+            <div>
+                <Link :href="'/forum/' + category.slug + '/create'" class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded">
+                    <LayersPlus class="w-5 h-5 inline-block" /> Создать тему                
+                </Link>
+            </div>
         </div>        
 
         <Link v-for="thread in threads.data" :key="thread.id"

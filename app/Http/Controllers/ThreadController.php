@@ -10,9 +10,27 @@ use Illuminate\Support\Str;
 
 class ThreadController extends Controller
 {
-    public function index(Category $category) {
-        $threads = $category->threads()->with('user')->withCount('replies')->latest()->paginate(15);
-        return Inertia::render('Forum/Threads/Index', ['threads' => $threads, 'category' => $category]);
+    public function index(Category $category, Request $request) {
+        $search = $request->input('search');
+        $sort = $request->input('sort', 'latest');
+
+        $threads = $category->threads()
+            ->with('user')
+            ->withCount('replies')
+            ->when($search, fn($q) => $q->where('title', 'like', '%' . $search . '%'))
+            ->when($sort === 'popular', 
+                fn($q) => $q->orderByDesc('replies_count'),
+                fn($q) => $q->latest()
+            )
+            ->paginate(15)
+            ->withQueryString();
+
+        return Inertia::render('Forum/Threads/Index', [
+            'threads' => $threads, 
+            'category' => $category,
+            'search' => $search,
+            'sort' => $sort,
+        ]);
     }
     
     public function show(Category $category, Thread $thread) {
