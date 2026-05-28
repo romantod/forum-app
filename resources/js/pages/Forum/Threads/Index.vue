@@ -42,7 +42,6 @@ const setSort = (sort: string) => {
 
             <input v-model="searchQuery" type="text" placeholder="Поиск тем..." 
                 class="w-64 p-2 rounded bg-gray-700 text-white placeholder-gray-400"/>
-
             
         </div>
 

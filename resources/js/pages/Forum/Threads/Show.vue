@@ -2,7 +2,7 @@
 import { Head, Link, router, useForm } from '@inertiajs/vue3';
 import { MoveLeft } from '@lucide/vue';
 
-const props = defineProps({ thread: Object, canEdit: Boolean, authUserId: Number })
+const props = defineProps({ thread: Object, canEdit: Boolean, authUserId: Number, isModerator: Boolean })
 
 const deleteThread = () => {
     if (!confirm('Удалить тему?')) return;
@@ -55,7 +55,7 @@ const deleteReply = (id: number) => {
                 </div>
                 
                 <hr class="border-gray-700 my-6">
-    
+                    
                 <p class="font-semibold text-lg">Ответов: {{ thread.replies.length }}</p>
 
                 <div v-for="reply in thread.replies" :key="reply.id"
@@ -66,7 +66,7 @@ const deleteReply = (id: number) => {
                     <p class="text-gray-400 text-xs mb-2">{{ new Date(reply.created_at).toLocaleString('ru-RU') }}</p>
                     <p class="text-gray-300 mb-4">{{ reply.body }}</p>
 
-                    <button v-if="authUserId === reply.user_id || canEdit" @click="deleteReply(reply.id)" class="text-xs px-3 
+                    <button v-if="authUserId === reply.user_id || isModerator" @click="deleteReply(reply.id)" class="text-xs px-3 
                         py-1.5 rounded bg-gray-700 text-red-300 hover:bg-red-600 hover:text-white transition cursor-pointer">
                         🗑️ Удалить
                     </button>

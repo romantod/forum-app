@@ -46,5 +46,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/replies/{reply}', [ReplyController::class, 'destroy'])->name('replies.destroy');
 });
 
+Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->group(function() {
+    Route::get('/categories', [CategoryController::class, 'adminIndex'])->name('admin.categories.index');
+    Route::get('/categories/create', [CategoryController::class, 'create'])->name('admin.categories.create');
+    Route::post('/categories', [CategoryController::class, 'store'])->name('admin.categories.store');
+    Route::get('/categories/{category}/edit', [CategoryController::class, 'edit'])->name('admin.categories.edit');
+    Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('admin.categories.update');
+    Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('admin.categories.destroy');
+});
+
 
 require __DIR__.'/settings.php';

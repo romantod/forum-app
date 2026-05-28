@@ -40,6 +40,7 @@ class ThreadController extends Controller
             'thread' => $thread,
             'canEdit' => auth()->check() && (auth()->id() === $thread->user_id || auth()->user()->isModerator()),
             'authUserId' => auth()->id(),
+            'isModerator' => auth()->check() && auth()->user()->isModerator(),
         ]);
     }
 
