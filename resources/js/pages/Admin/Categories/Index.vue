@@ -3,7 +3,7 @@ import { Head, Link, router } from '@inertiajs/vue3';
 import { MoveLeft, LayersPlus } from '@lucide/vue';
 
 
-const props = defineProps({ categories: Array });
+defineProps({ categories: Array });
 
 const deleteCategory = (id: number) => {
     if (!confirm('Удалить категорию?')) return;
