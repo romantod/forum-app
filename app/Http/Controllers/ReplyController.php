@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NewReplyPosted;
 use App\Models\Category;
 use App\Models\Reply;
 use App\Models\Thread;
@@ -14,10 +15,19 @@ class ReplyController extends Controller
             'body' => 'required|min:3'
         ]);
 
-        $thread->replies()->create([
+        $reply = $thread->replies()->create([
             'body' => $validated['body'],
             'user_id' => auth()->id(),
         ]);
+
+        $reply->load('user');
+        
+        \Log::info('Broadcasting NewReplyPosted event', [
+            'reply_id' => $reply->id,
+            'thread_id' => $reply->thread_id,
+        ]);
+        
+        event(new NewReplyPosted($reply));
 
         return redirect()->back()->with('toast', ['type' => 'success', 'message' => 'Ответ добавлен!']);
     }
@@ -25,6 +35,6 @@ class ReplyController extends Controller
     public function destroy(Reply $reply) {
         $this->authorize('delete', $reply);
         $reply->delete();
-        return back()->with('toast', ['type' => 'seccess', 'message' => 'Ответ удален!']);
+        return back()->with('toast', ['type' => 'success', 'message' => 'Ответ удален!']);
     }
 }

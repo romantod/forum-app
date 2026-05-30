@@ -1,8 +1,12 @@
 <script setup lang="ts">
 import { Head, Link, router, useForm } from '@inertiajs/vue3';
 import { MoveLeft } from '@lucide/vue';
+import { onMounted, onUnmounted, ref } from 'vue';
+
 
 const props = defineProps({ thread: Object, canEdit: Boolean, authUserId: Number, isModerator: Boolean })
+
+const replies = ref(props.thread.replies)
 
 const deleteThread = () => {
     if (!confirm('Удалить тему?')) return;
@@ -18,6 +22,27 @@ const deleteReply = (id: number) => {
     if (!confirm('Удалить ответ?')) return;
     router.delete('/replies/' + id);
 };
+
+let channel: any;
+
+onMounted(() => {
+    console.log('Connecting to channel: thread.' + props.thread.id);
+    channel = window.Echo.channel('thread.' + props.thread.id);
+    
+    channel.listen('NewReplyPosted', (e: any) => {
+        console.log('New reply received:', e);
+        replies.value.push(e.reply);
+    });
+    
+    console.log('Echo connection state:', window.Echo.connector.pusher.connection.state);
+});
+
+onUnmounted(() => {
+    if (channel) {
+        console.log('Leaving channel: thread.' + props.thread.id);
+        window.Echo.leave('thread.' + props.thread.id);
+    }
+});
 
 </script>
 
@@ -56,9 +81,9 @@ const deleteReply = (id: number) => {
                 
                 <hr class="border-gray-700 my-6">
                     
-                <p class="font-semibold text-lg">Ответов: {{ thread.replies.length }}</p>
+                <p class="font-semibold text-lg">Ответов: {{ replies.length }}</p>
 
-                <div v-for="reply in thread.replies" :key="reply.id"
+                <div v-for="reply in replies" :key="reply.id"
                     class="rounded-lg border border-gray-700 bg-gray-800 p-5 
                         hover:border-blue-500 transition">
 

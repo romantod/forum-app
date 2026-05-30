@@ -4,11 +4,28 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import AuthLayout from '@/layouts/AuthLayout.vue';
 import SettingsLayout from '@/layouts/settings/Layout.vue';
 import { initializeFlashToast } from '@/lib/flashToast';
-import { configureEcho } from '@laravel/echo-vue';
+// import { configureEcho } from '@laravel/echo-vue';
+import Echo  from 'laravel-echo';
+import Pusher from 'pusher-js';
 
-configureEcho({
-    broadcaster: 'reverb',
-});
+if (typeof window !== 'undefined') {
+    window.Pusher = Pusher;
+    window.Echo = new Echo({
+        broadcaster: 'reverb',
+        key: import.meta.env.VITE_REVERB_APP_KEY,
+        wsHost: import.meta.env.VITE_REVERB_HOST,
+        wsPort: import.meta.env.VITE_REVERB_PORT,
+        wssPort: import.meta.env.VITE_REVERB_PORT,
+        forceTLS: false,
+        enabledTransports: ['ws'],
+    });
+}
+
+
+
+// configureEcho({
+//     broadcaster: 'reverb',
+// });
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
